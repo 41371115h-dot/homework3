@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>嘉欣的個人網頁</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;600;700&family=Quicksand:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg1: #fde3ff;
+      --bg2: #d8e8ff;
+      --bg3: #fff4e6;
+      --ink: #604b6f;
+      --ink-soft: #7a6589;
+      --accent: #f1a7f1;
+      --card: #ffffffcc;
+      --shadow: 0 10px 30px rgba(103, 72, 118, 0.18);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Quicksand', sans-serif;
+      color: var(--ink);
+      background: radial-gradient(1200px 600px at 10% 10%, var(--bg1), transparent 60%),
+        radial-gradient(1000px 500px at 90% 0%, var(--bg2), transparent 60%),
+        radial-gradient(900px 500px at 50% 100%, var(--bg3), transparent 60%),
+        linear-gradient(180deg, #fff 0%, #fff7fb 100%);
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+      z-index: 10;
+    }
+
+    nav a {
+      color: var(--ink);
+      text-decoration: none;
+      margin: 0 12px;
+      font-weight: 700;
+      transition: transform .2s ease;
+    }
+
+    nav a:hover {
+      transform: translateY(-2px);
+      color: var(--accent);
+    }
+
+    @keyframes highlight {
+      0% {
+        transform: scale(1);
+        box-shadow: none;
+      }
+
+      50% {
+        transform: scale(1.03);
+        box-shadow: 0 0 20px rgba(122, 94, 163, 0.3);
+      }
+
+      100% {
+        transform: scale(1);
+        box-shadow: none;
+      }
+    }
+
+    .highlighted {
+      animation: highlight 0.8s ease;
+    }
+
+    /* 回到頂端按鈕 */
+    #backToTop {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d8b4fe, #fbc2eb, #a6c1ee);
+      color: white;
+      font-size: 26px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+
+    #backToTop:hover {
+      transform: translateY(-6px) scale(1.1);
+      box-shadow: 0 12px 24px rgba(103, 72, 118, 0.4);
+    }
+
+    header {
+      max-width: 1100px;
+      margin: 0 auto;
+      /* 水平置中 */
+      min-height: 100vh;
+      /* 撐滿一整個螢幕 */
+      display: flex;
+      flex-direction: column;
+      /* 改成直向排列 */
+      justify-content: center;
+      /* 垂直置中 */
+      align-items: center;
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    header h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(50px, 8vw, 90px);
+      margin: 0;
+      color: #7a5ea3;
+      text-shadow: 0 4px 15px rgba(146, 112, 169, 0.25);
+    }
+
+    header p {
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--ink-soft);
+      margin-bottom: 30px;
+      font-weight: 500;
+    }
+
+    .btn {
+      padding: 14px 24px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ffd6ff, #d8e3ff);
+      color: var(--ink);
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: var(--shadow);
+      transition: all .3s ease;
+      margin: 8px;
+      /* 讓按鈕之間有間距 */
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 26px rgba(103, 72, 118, 0.22);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    section {
+      max-width: 1100px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(24px, 4vw, 36px);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #7a5ea3;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 32px rgba(103, 72, 118, 0.22);
+    }
+
+    .card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card .content {
+      padding: 18px;
+    }
+
+    .card .content h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #7a5ea3;
+    }
+
+    .card .content p {
+      margin: 0;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    form {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    form label {
+      display: flex;
+      flex-direction: column;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    form input,
+    form textarea {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(124, 98, 158, .25);
+      outline: none;
+      font-family: inherit;
+      font-size: 16px;
+    }
+
+    form textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .center {
+      margin: 0 auto;
+      /* 左右自動留白 */
+      width: 80%;
+    }
+
+    /* Slideshow */
+    .slideshow-container {
+      border: 5px solid rgba(168, 139, 235, 0.4);
+      position: relative;
+      max-width: 100%;
+      margin: auto;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .slides {
+      display: none;
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+    }
+
+    .prev,
+    .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      margin-top: -22px;
+      padding: 16px;
+      color: white;
+      font-weight: bold;
+      font-size: 24px;
+      transition: 0.3s;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .next {
+      right: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .prev:hover,
+    .next:hover {
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .dot-container {
+      text-align: center;
+      padding: 12px;
+    }
+
+    .dot {
+      cursor: pointer;
+      height: 14px;
+      width: 14px;
+      margin: 0 6px;
+      background: #d8cdee;
+      /* 預設淡紫色 */
+      border-radius: 50%;
+      display: inline-block;
+      transition: all 0.4s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+
+    .dot:hover {
+      background: linear-gradient(135deg, #a88beb, #f8ceec);
+      transform: scale(1.2);
+      box-shadow: 0 4px 10px rgba(103, 72, 118, 0.4);
+    }
+
+    .active {
+      background: linear-gradient(135deg, #a88beb, #f8ceec);
+      box-shadow: 0 4px 12px rgba(103, 72, 118, 0.6);
+      /* 更亮的光暈 */
+      transform: scale(1.3);
+    }
+
+
+    .album-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 50px;
+      /* 相簿與文字的間距 */
+      margin: 60px auto;
+      max-width: 1100px;
+      padding: 0 40px;
+      /* 整體左右留白 */
+    }
+
+    .album-slideshow {
+      flex: 1.2;
+      min-width: 300px;
+    }
+
+    .album-text {
+      flex: 0.8;
+      background: linear-gradient(135deg, #ffe4f7 0%, #e6efff 100%);
+      padding: 28px;
+      border-radius: var(--radius);
+      border: 2px solid rgba(168, 139, 235, 0.4);
+      /* 淡紫色描邊 */
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      text-align: center;
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+
+    .album-text:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 28px rgba(103, 72, 118, 0.25);
+      border-color: rgba(168, 139, 235, 0.7);
+      /* hover 時描邊變深 */
+    }
+
+    .album-text h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 28px;
+      margin-bottom: 14px;
+      color: #7a5ea3;
+      background: linear-gradient(90deg, #c7afff, #f86dd0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .album-text p {
+      font-size: 17px;
+      line-height: 1.8;
+      color: #555;
+    }
+
+    /* 近期好事卡片 */
+    .journal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .journal-card {
+      background: linear-gradient(135deg, #ffe6fb, #e6f0ff);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 8px 20px rgba(103, 72, 118, 0.15);
+      border: 1px solid rgba(255, 182, 245, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .journal-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 28px rgba(103, 72, 118, 0.25);
+    }
+
+    .journal-date {
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      color: #a45ee6;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .journal-text {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 500;
+      color: #604b6f;
+      line-height: 1.6;
+    }
+
+    /* IG info card style */
+
+    .ig-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 30px;
+      box-shadow: var(--shadow);
+      max-width: 500px;
+      margin-top: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .ig-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .ig-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 32px rgba(103, 72, 118, 0.22);
+    }
+
+    .ig-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 16px;
+      object-fit: cover;
+    }
+
+    .ig-card .info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ig-card .info a {
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+      margin-bottom: 6px;
+      font-size: 18px;
+    }
+
+    .ig-card .info p {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 16px;
+    }
+
+    .ig-cards-container {
+      display: flex;
+      /* 水平排列 */
+      justify-content: center;
+      /* 水平置中整組卡片 */
+      gap: 30px;
+      flex-wrap: wrap;
+      /* 當螢幕太小會自動換行 */
+    }
+
+    /* 通用區塊動畫類別 */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      text-align: center;
+      padding: 60px 20px;
+      color: #7e6a8b;
+      font-size: 14px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /*興趣專區*/
+
+    .interest-card {
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+      font-size: 20px;
+      transition: 0.3s;
+    }
+
+    .interest-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .interest-card img {
+      width: 80%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      /* 保持圖片比例，裁切多餘部分 */
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    #hobby h2 {
+      margin-bottom: 40px;
+      font-size: 40px;
+      color: #7a5ea3;
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <a href="#top">嘉欣的個人網頁</a>
+    <div>
+      <a href="#gallery">逛逛相簿</a>
+      <a href="#card">近期好事</a>
+      <a href="#hobby">興趣專區</a>
+      <a href="#contact">聯絡我</a>
+    </div>
+  </nav>
+
+  <button id="backToTop">🖕</button>
+
+  <header id="top" class="fade-up">
+    <div>
+      <h1>Hi, I'm 李嘉欣</h1>
+      <br>
+      <p>一個就讀大學二年級的女生。<br>
+        平時喜歡看動漫、追宮鬥劇、打遊戲和逛街，<br>
+        但最喜歡的事情還是穿上美美的衣服到處去拍照片。</p>
+      <br>
+      <a class="btn" href="#gallery">🪞 逛逛相簿</a>
+      <a class="btn" href="#card">✨ 近期好事</a>
+      <a class="btn" href="#hobby">💖 興趣專區</a>
+      <a class="btn" href="#contact">💌 聯絡我</a>
+    </div>
+  </header>
+
+
+  <!-- 相簿一 -->
+  <section id="gallery" class="fade-up album-row">
+    <div class="album-slideshow">
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="slideshow-container" id="album1">
+        <img class="slides" src="20250112嘉欣加薪_03永康街-5.jpg">
+        <img class="slides" src="9C2A1378_01.JPG">
+        <img class="slides" src="20250112嘉欣加薪_08公車站-3.jpg">
+        <img class="slides" src="9C2A1567_01.JPG">
+        <img class="slides" src="9C2A4487_01.JPG">
+        <a class="prev" onclick="plusSlides(-1, 0)">❮</a>
+        <a class="next" onclick="plusSlides(1, 0)">❯</a>
+      </div>
+      <div class="dot-container">
+        <span class="dot" onclick="currentSlide(1,0)"></span>
+        <span class="dot" onclick="currentSlide(2,0)"></span>
+        <span class="dot" onclick="currentSlide(3,0)"></span>
+        <span class="dot" onclick="currentSlide(4,0)"></span>
+        <span class="dot" onclick="currentSlide(5,0)"></span>
+      </div>
+    </div>
+    <div class="album-text">
+      <h2>相簿一</h2>
+      <p>穿上會讓人變年輕的女高中生制服</p>
+    </div>
+  </section>
+
+
+  <!-- 相簿二-->
+  <section class="fade-up album-row reverse">
+    <div class="album-slideshow">
+      <div class="slideshow-container" id="album2">
+        <img class="slides" src="DSC_5321.JPG">
+        <img class="slides" src="DSC_3139.JPG">
+        <img class="slides" src="0Z8A2696-1_0.jpg">
+        <img class="slides" src="20241221至善園_雪竹影-27.jpg">
+        <img class="slides" src="IMG_20240922_183408.jpg">
+        <a class="prev" onclick="plusSlides(-1, 1)">❮</a>
+        <a class="next" onclick="plusSlides(1, 1)">❯</a>
+      </div>
+      <div class="dot-container">
+        <span class="dot" onclick="currentSlide(1,1)"></span>
+        <span class="dot" onclick="currentSlide(2,1)"></span>
+        <span class="dot" onclick="currentSlide(3,1)"></span>
+        <span class="dot" onclick="currentSlide(4,1)"></span>
+        <span class="dot" onclick="currentSlide(5,1)"></span>
+      </div>
+    </div>
+    <div class="album-text">
+      <h2>相簿二</h2>
+      <p>穿上仙氣飄飄的漢服看風景</p>
+    </div>
+  </section>
+
+
+  <!-- 相簿三 -->
+  <section class="fade-up album-row">
+    <div class="album-slideshow">
+      <div class="slideshow-container" id="album3">
+        <img class="slides" src="9C2A3248_01.JPG">
+        <img class="slides" src="9C2A6569_01.JPG">
+        <img class="slides" src="404522_0.jpg">
+        <img class="slides" src="IMG_1948.JPG">
+        <img class="slides" src="DSC_2125.JPG">
+        <a class="prev" onclick="plusSlides(-1, 2)">❮</a>
+        <a class="next" onclick="plusSlides(1, 2)">❯</a>
+      </div>
+      <div class="dot-container">
+        <span class="dot" onclick="currentSlide(1,2)"></span>
+        <span class="dot" onclick="currentSlide(2,2)"></span>
+        <span class="dot" onclick="currentSlide(3,2)"></span>
+        <span class="dot" onclick="currentSlide(4,2)"></span>
+        <span class="dot" onclick="currentSlide(5,2)"></span>
+      </div>
+    </div>
+    <div class="album-text">
+      <h2>相簿三</h2>
+      <p>穿上美美的裙子去做我想做的事情</p>
+    </div>
+  </section>
+
+
+  <section id="card" class="fade-up">
+    <br>
+    <br>
+    <h2>近期碰到的好事</h2>
+    <p>最近有發生什麼好事嗎? 我會不定期更新跟大家一起分享歐</p>
+    <div class="journal-grid">
+      <div class="journal-card">
+        <div class="journal-date">09/02</div>
+        <div class="journal-text">開學的第二天，加簽到兩門課，讓我有課程可以上</div>
+      </div>
+      <div class="journal-card">
+        <div class="journal-date">09/12</div>
+        <div class="journal-text">跟好久不見的朋友見面，他請我一起去吃我最喜歡的壽司</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="hobby" class="fade-up">
+    <br>
+    <br>
+    <h2>興趣專區</h2>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="interest-card">
+          <img src="500_0757.JPG">
+          <h1>崑曲社</h1>
+          <p>一襲水袖、一柄摺扇，優雅的身段與婉轉的唱腔，這些都是我踏入崑曲社的原因<br>
+            剛開始練習時，基礎動作總是練不好，常常覺得氣餒；但在學姊耐心的指導下，我漸漸找到自己的節奏<br>
+            最終能夠自信地站上公演舞台，那一刻的成就感至今仍難以忘懷</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="interest-card">
+          <img src="20211225212747_4dbfc.jpg">
+          <h1>二次元世界</h1>
+          <p>我最喜歡的作品是《五等分的花嫁》，甜蜜又帶著成長的故事，總能讓我會心一笑<br>
+            當然我還看過其他的作品，像是《從零開始的異世界生活》、《狂賭之淵》和《莉可莉絲》等等<br>
+            我覺得動漫很適合放鬆，當然也有些作品是主打劇情燒腦路線</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="interest-card">
+          <img src="maxresdefault.jpg">
+          <h1>喜歡的宮鬥劇</h1>
+          <p>古典的華服、深沉的人心角力，宮鬥劇裡的一切都讓我著迷<br>
+            從《甄嬛傳》到《延禧攻略》，再到《如懿傳》，每一次重看都能發現不同的細節與人生感悟<br>
+            有人說宮鬥劇只是鬥爭的故事，但對我來說，那是一種看透人性、又能反思自我的心靈體驗</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="fade-up">
+    <div class="ig-cards-container">
+      <div class="ig-card fade-up">
+        <img src="cynthia_1009__qr.png" alt="IG QR Code">
+        <div class="info">
+          <a href="https://www.instagram.com/cynthia_1009_/" target="_blank">@cynthia_1009_</a>
+          <p>如果想要看到其他的作品</p>
+          <p>可以前往我的IG歐~~</p>
+        </div>
+      </div>
+      <div class="ig-card fade-up">
+        <img src="laialan1122_qr.png" alt="IG QR Code">
+        <div class="info">
+          <a href="https://www.instagram.com/laialan1122/" target="_blank">@laialan1122</a>
+          <p>如果想要看到我男友的作品</p>
+          <p>可以前往他的IG歐~~</p>
+        </div>
+      </div>
+    </div>
+    <div id="react-root" class="fade-up"></div>
+  </section>
+
+  <footer class="fade-up">
+    <p>© 李嘉欣</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const faders = document.querySelectorAll('.fade-up');
+      const appearOptions = { threshold: 0.1 };
+      const appearOnScroll = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, appearOptions);
+      faders.forEach(fader => appearOnScroll.observe(fader));
+    });
+  </script>
+
+  <script>
+    let slideIndex = [1, 1, 1];
+    let slideId = ["album1", "album2", "album3"];
+    let autoTimers = [];
+
+    function showSlides(n, no) {
+      let i;
+      let x = document.querySelectorAll(`#${slideId[no]} .slides`);
+      let dots = document.querySelectorAll(`#${slideId[no]} ~ .dot-container .dot`);
+      if (n > x.length) { slideIndex[no] = 1 }
+      if (n < 1) { slideIndex[no] = x.length }
+      for (i = 0; i < x.length; i++) { x[i].style.display = "none"; }
+      for (i = 0; i < dots.length; i++) { dots[i].classList.remove("active"); }
+      x[slideIndex[no] - 1].style.display = "block";
+      dots[slideIndex[no] - 1].classList.add("active");
+    }
+
+
+    function plusSlides(n, no) {
+      showSlides(slideIndex[no] += n, no);
+    }
+
+    function currentSlide(n, no) {
+      showSlides(slideIndex[no] = n, no);
+    }
+
+    function autoShow(no) {
+      slideIndex[no]++;
+      showSlides(slideIndex[no], no);
+      autoTimers[no] = setTimeout(() => autoShow(no), 4000);
+    }
+
+    for (let j = 0; j < slideId.length; j++) {
+      showSlides(slideIndex[j], j);
+      autoShow(j);
+    }
+  </script>
+
+  <script>
+    const backToTopBtn = document.getElementById("backToTop");
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.style.display = "flex";
+      } else {
+        backToTopBtn.style.display = "none";
+      }
+    });
+
+    backToTopBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
+
+  <script>
+    // nav 和 header 裡的所有 # 開頭連結
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        const target = document.querySelector(this.getAttribute("href"));
+        if (target) {
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+
+          // 🔹加上閃亮動畫
+          target.classList.remove("highlighted");
+          void target.offsetWidth; // 重新觸發動畫
+          target.classList.add("highlighted");
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>
